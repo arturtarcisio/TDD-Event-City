@@ -1,9 +1,13 @@
 package com.devsuperior.bds02.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +25,14 @@ public class CityController {
 
 	@Autowired
 	public CityController(CityService cityService) {
-		super();
 		this.cityService = cityService;
 	}
 	
-//	@GetMapping
-//	public ResponseEntity<List<CityDTO>> findAllPaged() {
-//		List<CityDTO> list = cityService.findAllOrderByName();		
-//		return ResponseEntity.ok(list);
-//	}
+	@GetMapping
+	public ResponseEntity<List<CityDTO>> findAllPaged() {
+		List<CityDTO> list = cityService.findAll();		
+		return ResponseEntity.ok(list);
+	}
 	
 	@PostMapping
 	public ResponseEntity<CityDTO> insert (@RequestBody CityDTO dto) {
@@ -41,6 +44,12 @@ public class CityController {
 				.toUri();
 		
 		return ResponseEntity.created(uri).body(dto);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteById (@PathVariable Long id) {
+		cityService.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

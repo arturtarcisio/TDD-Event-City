@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.devsuperior.bds02.entities.City;
 
-public class CityDTO implements Serializable {
+public class CityDTO implements Serializable, Comparable<CityDTO> {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
@@ -38,4 +38,9 @@ public class CityDTO implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+    public int compareTo(CityDTO dto) {
+        return this.getName().compareTo(dto.getName());
+    }
 }
